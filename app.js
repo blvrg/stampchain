@@ -2,7 +2,6 @@
 let currentPage = 1;
 const itemsPerPage = 500;
 const apiBaseUrl = 'https://stampchain.io/api/stamps';
-let totalNumberOfStamps = 0;
 
 function simpleValidateAddress(address) {
   return /^1|^3|^bc1q/.test(address);
@@ -12,173 +11,69 @@ function isValidCpid(cpid) {
   return /^A\d+$/.test(cpid);
 }
 
-
-function indexPage() {
-  // Get the creator address from URL query parameter if exists
-  const urlParams = new URLSearchParams(window.location.search);
-  const creatorAddress = urlParams.get('creator');
-
-
-  fetchDataAndRender(currentPage, creatorAddress);
-
-  function fetchDataAndRender(page, creator) {
-    // Update the API endpoint with the creator query parameter if it exists
-    const apiUrl = creator
-      ? `${apiBaseUrl}?creator=${creator}&page=${page}&page_size=${itemsPerPage}&sort_order=desc`
-      : `${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`;
-
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        // If this is the first page, set the total number of stamps (our only chance, really)
-        if (currentPage === 1 && data[0]) {
-          totalNumberOfStamps = Number(data[0].stamp);
-        }
-
-        renderData(data);
-        renderPaginationButtons(page, data.length);
-      })
-      .catch(error => console.error(error));
+// Trigger lazy loading when user scrolls to the bottom of the page
+window.onscroll = function() {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    // you're at the bottom of the page
+    const urlParams = new URLSearchParams(window.location.search);
+    const creatorAddress = urlParams.get('creator');
+    fetchDataAndRender(currentPage, creatorAddress);
   }
-
-  function renderData(data) {
-    const dataContainer = document.getElementById('data-container');
-    // Clear the previous items from the container
-    dataContainer.innerHTML = '';
-
-    data.forEach((item, index) => {
-      const itemContainer = document.createElement('div');
-      itemContainer.classList.add('item');
-      if (item.stamp_url) {
-        const img = document.createElement('img');
-        img.src = item.stamp_url;
-        img.width = 210;
-        img.height = 210;
-        img.onerror = function () {
-          this.onerror = null;
-          this.src = 'images/sad.png';
-        };
-        img.style.objectFit = 'contain';
-        img.style.imageRendering = 'pixelated';
-        img.style.imageRendering = '-moz-crisp-edges';
-        img.style.imageRendering = 'crisp-edges';
-        img.style.backgroundColor = '#000000';
-        itemContainer.appendChild(img);
-      }
-      const stampInfo = document.createElement('pre');
-      stampInfo.innerText = `Stamp: ${item.stamp}`;
-      itemContainer.appendChild(stampInfo);
-
-      const creatorInfo = document.createElement('pre');
-      const displayedCreator = item.artist_name ? item.artist_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
-      creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
-      itemContainer.appendChild(creatorInfo);
-      
-
-      const viewMoreBtn = document.createElement('button');
-      viewMoreBtn.innerText = 'View More';
-      viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
-      itemContainer.appendChild(viewMoreBtn);
-      dataContainer.appendChild(itemContainer);
-    });
-  }
-
-  function renderPaginationButtons(page) {
-    const paginationContainerTop = document.getElementById('pagination-container-top');
-    const paginationContainerBottom = document.getElementById('pagination-container-bottom');
-  
-    paginationContainerTop.innerHTML = '';
-    paginationContainerBottom.innerHTML = '';
-  
-    const totalPages = Math.ceil(totalNumberOfStamps / itemsPerPage);
-  
-    const firstButtonTop = document.createElement('button');
-    firstButtonTop.innerText = '<< First';
-    firstButtonTop.disabled = page === 1;
-    firstButtonTop.addEventListener('click', () => {
-      currentPage = 1;
-      fetchDataAndRender(currentPage);
-    });
-  
-    const prevButtonTop = document.createElement('button');
-    prevButtonTop.innerText = '< Previous';
-    prevButtonTop.disabled = page === 1;
-    prevButtonTop.addEventListener('click', () => {
-      currentPage--;
-      fetchDataAndRender(currentPage);
-    });
-  
-    const nextButtonTop = document.createElement('button');
-    nextButtonTop.innerText = 'Next >';
-    nextButtonTop.disabled = page === totalPages;
-    nextButtonTop.addEventListener('click', () => {
-      currentPage++;
-      fetchDataAndRender(currentPage);
-    });
-  
-    const lastButtonTop = document.createElement('button');
-    lastButtonTop.innerText = 'Last >>';
-    lastButtonTop.disabled = page === totalPages;
-    lastButtonTop.addEventListener('click', () => {
-      currentPage = totalPages;
-      fetchDataAndRender(currentPage);
-    });
-  
-    const firstButtonBottom = firstButtonTop.cloneNode(true);
-    const prevButtonBottom = prevButtonTop.cloneNode(true);
-    const nextButtonBottom = nextButtonTop.cloneNode(true);
-    const lastButtonBottom = lastButtonTop.cloneNode(true);
-  
-    // Remove the previous event listeners
-    firstButtonBottom.removeEventListener('click', () => {
-      currentPage = 1;
-      fetchDataAndRender(currentPage);
-    });
-    prevButtonBottom.removeEventListener('click', () => {
-      currentPage--;
-      fetchDataAndRender(currentPage);
-    });
-    nextButtonBottom.removeEventListener('click', () => {
-      currentPage++;
-      fetchDataAndRender(currentPage);
-    });
-    lastButtonBottom.removeEventListener('click', () => {
-      currentPage = totalPages;
-      fetchDataAndRender(currentPage);
-    });
-  
-    // Add new event listeners
-    firstButtonBottom.addEventListener('click', () => {
-      currentPage = 1;
-      fetchDataAndRender(currentPage);
-    });
-    prevButtonBottom.addEventListener('click', () => {
-      currentPage--;
-      fetchDataAndRender(currentPage);
-    });
-    nextButtonBottom.addEventListener('click', () => {
-      currentPage++;
-      fetchDataAndRender(currentPage);
-    });
-    lastButtonBottom.addEventListener('click', () => {
-      currentPage = totalPages;
-      fetchDataAndRender(currentPage);
-    });
-  
-    // Replace the old buttons in the DOM with the new ones
-    paginationContainerTop.appendChild(firstButtonTop);
-    paginationContainerTop.appendChild(prevButtonTop);
-    paginationContainerTop.appendChild(nextButtonTop);
-    paginationContainerTop.appendChild(lastButtonTop);
-  
-    paginationContainerBottom.appendChild(firstButtonBottom);
-    paginationContainerBottom.appendChild(prevButtonBottom);
-    paginationContainerBottom.appendChild(nextButtonBottom);
-    paginationContainerBottom.appendChild(lastButtonBottom);
-  }
-  
 }
 
+function fetchDataAndRender(page, creator) {
+  // Update the API endpoint with the creator query parameter if it exists
+  const apiUrl = creator
+    ? `${apiBaseUrl}?creator=${creator}&page=${page}&page_size=${itemsPerPage}&sort_order=desc`
+    : `${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      appendData(data);
+      currentPage += 1; // Increment the current page
+    })
+    .catch(error => console.error(error));
+}
+
+function appendData(data) {
+  const dataContainer = document.getElementById('data-container');
+
+  data.forEach((item, index) => {
+    const itemContainer = document.createElement('div');
+    itemContainer.classList.add('item');
+    if (item.stamp_url) {
+      const img = document.createElement('img');
+      img.src = item.stamp_url;
+      img.width = 210;
+      img.height = 210;
+      img.onerror = function () {
+        this.onerror = null;
+        this.src = 'images/sad.png';
+      };
+      img.style.objectFit = 'contain';
+      img.style.imageRendering = 'pixelated';
+      img.style.imageRendering = '-moz-crisp-edges';
+      img.style.imageRendering = 'crisp-edges';
+      img.style.backgroundColor = '#000000';
+      itemContainer.appendChild(img);
+    }
+    const stampInfo = document.createElement('pre');
+    stampInfo.innerText = `Stamp: ${item.stamp}`;
+    itemContainer.appendChild(stampInfo);
+
+    const creatorInfo = document.createElement('pre');
+    const displayedCreator = item.artist_name ? item.artist_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
+    creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
+    itemContainer.appendChild(creatorInfo);
+
+    const viewMoreBtn = document.createElement('button');
+    viewMoreBtn.innerText = 'View More';
+    viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
+    itemContainer.appendChild(viewMoreBtn);
+    dataContainer.appendChild(itemContainer);
+  });
+}
 
 function assetPage() {
   async function fetchAssetDetails() {
@@ -215,8 +110,6 @@ function assetPage() {
   }
   
   
-
-
   function displayAssetDetails(data) {
     const assetContainer = document.getElementById('asset-container');
 

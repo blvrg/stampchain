@@ -49,6 +49,8 @@ function indexPage() {
     data.forEach((item, index) => {
       const itemContainer = document.createElement('div');
       itemContainer.classList.add('item');
+      itemContainer.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
+
       if (item.stamp_url) {
         const img = document.createElement('img');
         img.src = item.stamp_url;
@@ -80,8 +82,6 @@ function indexPage() {
       viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
       itemContainer.appendChild(viewMoreBtn);
       
-      itemContainer.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
-
       dataContainer.appendChild(itemContainer);
     });
   }

@@ -83,6 +83,102 @@ function indexPage() {
     });
   }
 
+  function renderPaginationButtons(page) {
+    const paginationContainerTop = document.getElementById('pagination-container-top');
+    const paginationContainerBottom = document.getElementById('pagination-container-bottom');
+  
+    paginationContainerTop.innerHTML = '';
+    paginationContainerBottom.innerHTML = '';
+  
+    const totalPages = Math.ceil(totalNumberOfStamps / itemsPerPage);
+  
+    const firstButtonTop = document.createElement('button');
+    firstButtonTop.innerText = '<< First';
+    firstButtonTop.disabled = page === 1;
+    firstButtonTop.addEventListener('click', () => {
+      currentPage = 1;
+      fetchDataAndRender(currentPage);
+    });
+  
+    const prevButtonTop = document.createElement('button');
+    prevButtonTop.innerText = '< Previous';
+    prevButtonTop.disabled = page === 1;
+    prevButtonTop.addEventListener('click', () => {
+      currentPage--;
+      fetchDataAndRender(currentPage);
+    });
+  
+    const nextButtonTop = document.createElement('button');
+    nextButtonTop.innerText = 'Next >';
+    nextButtonTop.disabled = page === totalPages;
+    nextButtonTop.addEventListener('click', () => {
+      currentPage++;
+      fetchDataAndRender(currentPage);
+    });
+  
+    const lastButtonTop = document.createElement('button');
+    lastButtonTop.innerText = 'Last >>';
+    lastButtonTop.disabled = page === totalPages;
+    lastButtonTop.addEventListener('click', () => {
+      currentPage = totalPages;
+      fetchDataAndRender(currentPage);
+    });
+  
+    const firstButtonBottom = firstButtonTop.cloneNode(true);
+    const prevButtonBottom = prevButtonTop.cloneNode(true);
+    const nextButtonBottom = nextButtonTop.cloneNode(true);
+    const lastButtonBottom = lastButtonTop.cloneNode(true);
+  
+    // Remove the previous event listeners
+    firstButtonBottom.removeEventListener('click', () => {
+      currentPage = 1;
+      fetchDataAndRender(currentPage);
+    });
+    prevButtonBottom.removeEventListener('click', () => {
+      currentPage--;
+      fetchDataAndRender(currentPage);
+    });
+    nextButtonBottom.removeEventListener('click', () => {
+      currentPage++;
+      fetchDataAndRender(currentPage);
+    });
+    lastButtonBottom.removeEventListener('click', () => {
+      currentPage = totalPages;
+      fetchDataAndRender(currentPage);
+    });
+  
+    // Add new event listeners
+    firstButtonBottom.addEventListener('click', () => {
+      currentPage = 1;
+      fetchDataAndRender(currentPage);
+    });
+    prevButtonBottom.addEventListener('click', () => {
+      currentPage--;
+      fetchDataAndRender(currentPage);
+    });
+    nextButtonBottom.addEventListener('click', () => {
+      currentPage++;
+      fetchDataAndRender(currentPage);
+    });
+    lastButtonBottom.addEventListener('click', () => {
+      currentPage = totalPages;
+      fetchDataAndRender(currentPage);
+    });
+  
+    // Replace the old buttons in the DOM with the new ones
+    paginationContainerTop.appendChild(firstButtonTop);
+    paginationContainerTop.appendChild(prevButtonTop);
+    paginationContainerTop.appendChild(nextButtonTop);
+    paginationContainerTop.appendChild(lastButtonTop);
+  
+    paginationContainerBottom.appendChild(firstButtonBottom);
+    paginationContainerBottom.appendChild(prevButtonBottom);
+    paginationContainerBottom.appendChild(nextButtonBottom);
+    paginationContainerBottom.appendChild(lastButtonBottom);
+  }
+  
+}
+
 
 function assetPage() {
   async function fetchAssetDetails() {

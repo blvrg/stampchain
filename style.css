@@ -40,7 +40,6 @@ body {
 	vertical-align: top;
 	text-align: center;
 	cursor: pointer;
-	border: 1px solid #111111;
 	margin: 5px;
 	}
 
@@ -68,8 +67,6 @@ body {
 	image-rendering: pixelated;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: crisp-edges;
-        background-image: url("/images/transparent-bg.png");
-        background-size: 3px;
       }
 
 button {
@@ -107,10 +104,6 @@ h3 {color: #111111;text-align:center;}
 	}
 	
 #asset-container {text-align:center;}
-
-#asset-container img {border-radius: 12px 12px 12px 12px;
-	background-image: url("/images/transparent-bg.png");
-        background-size: 3px;}
 	
 #asset-container pre {color: #111111;text-align:center;}
 #asset-container pre a {color: #111111;text-align:center;}

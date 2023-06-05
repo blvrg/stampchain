@@ -1,16 +1,16 @@
 #menu {position:absolute;
-       right:0px;top:0px;color:white;text-transform:none;
+       right:0px;top:0px;color: #111111;text-transform:none;
        font-size:12px;background-image: url("/images/transparent-bg.png");
        background-size: 3px;padding:6px 12px;}
 
-#menu a {color:white;text-decoration:none;}
+#menu a {color: #111111;text-decoration:none;}
 
 #menu a:hover {text-decoration:underline;color:yellow;}
 
 #menu strong {color:yellow;}
 		
 body {
-	background-color: #181818;
+	background-color: white;
 	color: #111111;
 	font-family: Courier New;
 	text-transform: uppercase;
@@ -18,15 +18,15 @@ body {
 	
 #container {position:absolute;left:50%;width:420px;margin-left:-210px;}
 
-#container p {color:white;font-size:10px;}
+#container p {color: #111111;font-size:10px;}
 
-#container p a {color:white;}
+#container p a {color: #111111;}
 
 #container p a:hover {color:yellow;}
 
 #BigLaunchButton {text-align:center;margin-top:50px;margin-bottom:50px;}
   
-  #BigLaunchButton a {text-transform:uppercase;color:white;text-decoration:none;font-weight:bold;font-size:20px;background-color:#666666; padding:10px 16px;border:4px solid white;border-radius:10px;}	
+  #BigLaunchButton a {text-transform:uppercase;color: #111111;text-decoration:none;font-weight:bold;font-size:20px;background-color:#666666; padding:10px 16px;border:4px solid white;border-radius:10px;}	
 	
   #BigLaunchButton a:hover {color:yellow;}
   
@@ -73,7 +73,7 @@ body {
 
 button {
 	background-color: #666666;
-	color: white;
+	color: #111111;
 	padding: 10px 20px;
 	border-radius: 12px ;
 	font-size: 12px;
@@ -93,14 +93,14 @@ h1 {
 	
 h1 a {text-decoration:none;color:#181818;}
 
-#copyright {color:white;text-align:center;text-transform:none;font-size:16px !important;margin-top:50px;}
+#copyright {color: #111111;text-align:center;text-transform:none;font-size:16px !important;margin-top:50px;}
 
 h2 {
-	color:white;text-align:center;font-family:serif;
+	color: #111111;text-align:center;font-family:serif;
 	text-transform: none;font-size:18px;
 	}
 	
-h3 {color:white;text-align:center;}
+h3 {color: #111111;text-align:center;}
 
 #data-container {
 	text-align:center;
@@ -112,8 +112,8 @@ h3 {color:white;text-align:center;}
 	background-image: url("/images/transparent-bg.png");
         background-size: 3px;}
 	
-#asset-container pre {color:white;text-align:center;}
-#asset-container pre a {color:white;text-align:center;}
+#asset-container pre {color: #111111;text-align:center;}
+#asset-container pre a {color: #111111;text-align:center;}
 
 #pagination-container-top {text-align:center;}
 #pagination-container-top button {margin:10px;background-color:black;}
@@ -125,11 +125,11 @@ h3 {color:white;text-align:center;}
 }
 
 
-#upload-form {text-transform:none;color:white;text-align:center;}
-#output {text-transform:none;color:white;text-align:center;}
-#confirmation-message {text-transform:none;color:white;text-align:center;}
-#notes {text-transform:none;color:white;text-align:center;font-size:12px;color:red;}
-#please-wait {text-transform:none;color:white;text-align:center;}
+#upload-form {text-transform:none;color: #111111;text-align:center;}
+#output {text-transform:none;color: #111111;text-align:center;}
+#confirmation-message {text-transform:none;color: #111111;text-align:center;}
+#notes {text-transform:none;color: #111111;text-align:center;font-size:12px;color:red;}
+#please-wait {text-transform:none;color: #111111;text-align:center;}
 label {text-transform:none;margin:40px;display:block;}
 #bitcoin-address {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 #creator-name {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
@@ -138,8 +138,8 @@ label {text-transform:none;margin:40px;display:block;}
 #asset-issuance {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 
 #search-form {text-align:center;}
-#search-form label {color:white;margin-bottom:0px;}
-#search-input {border:1px solid yellow;background-color:black;font-size:16px;color:white;padding:8px;}
+#search-form label {color: #111111;margin-bottom:0px;}
+#search-input {border:1px solid black;background-color:white;font-size:16px;color: #111111;padding:8px;}
 
 .lock-asset-container {
     display: flex;
@@ -149,7 +149,7 @@ label {text-transform:none;margin:40px;display:block;}
 
 .title-link {
 	text-decoration: none;
-	color: white;
+	color: #111111;
   }
   
 .title-link:hover {

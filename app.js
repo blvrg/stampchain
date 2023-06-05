@@ -48,7 +48,6 @@ function indexPage() {
 
     data.forEach((item, index) => {
       const itemContainer = document.createElement('div');
-      itemContainer.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
       itemContainer.classList.add('item');
       if (item.stamp_url) {
         const img = document.createElement('img');
@@ -74,11 +73,15 @@ function indexPage() {
       const displayedCreator = item.artist_name ? item.artist_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
       creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
       itemContainer.appendChild(creatorInfo);
+      
 
+      const viewMoreBtn = document.createElement('button');
+      viewMoreBtn.innerText = 'View More';
+      viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
+      itemContainer.appendChild(viewMoreBtn);
       dataContainer.appendChild(itemContainer);
     });
   }
-
 
 
 function assetPage() {

@@ -79,6 +79,9 @@ function indexPage() {
       viewMoreBtn.innerText = 'View More';
       viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
       itemContainer.appendChild(viewMoreBtn);
+      
+      itemContainer.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
+
       dataContainer.appendChild(itemContainer);
     });
   }

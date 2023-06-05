@@ -39,8 +39,9 @@ body {
 	display: inline-block;
 	vertical-align: top;
 	text-align: center;
-	margin-right: 20px;
-	cusror: pointer;
+	cursor: pointer;
+	border: 1px solid #111111;
+	margin: 5px;
 	}
 
 .item pre {
@@ -53,7 +54,7 @@ body {
 	font-size: 11px;
 	line-height: 1.5;
 	margin: 1px 0;
-		}
+	}
 .item button {display:none}
 
 #data-container {text-align:center;}	
@@ -139,7 +140,7 @@ label {text-transform:none;margin:40px;display:block;}
 #asset-lock {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 #asset-issuance {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 
-#search-form {text-align:center;}
+#search-form {text-align:center; display:none}
 #search-form label {color: #111111;margin-bottom:0px;}
 #search-input {border:1px solid black;background-color:white;font-size:16px;color: #111111;padding:8px;}
 

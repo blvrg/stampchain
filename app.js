@@ -70,17 +70,6 @@ function indexPage() {
       const stampInfo = document.createElement('pre');
       stampInfo.innerText = `Stamp: ${item.stamp}`;
       itemContainer.appendChild(stampInfo);
-
-      const creatorInfo = document.createElement('pre');
-      const displayedCreator = item.artist_name ? item.artist_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
-      creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
-      itemContainer.appendChild(creatorInfo);
-      
-
-      const viewMoreBtn = document.createElement('button');
-      viewMoreBtn.innerText = 'View More';
-      viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
-      itemContainer.appendChild(viewMoreBtn);
       
       dataContainer.appendChild(itemContainer);
     });

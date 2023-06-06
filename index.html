@@ -16,7 +16,7 @@
 <title>BITCOIN STAMPS</title>
 <script src="app.js" defer></script>
 </head>
-<body>	
+<body>
 	<a href="index.html" class="title-link"><h1>BITCOIN STAMPS</h1></a>
 	<h2><em>Unprunable UTXO Art</h2>
 	<div id="menu">
@@ -26,6 +26,16 @@
 		<input type="text" id="search-input" name="search" required placeholder="stamp, creator, tx, cpid">
 		<button type="submit">Search</button>
 	</form>
+	<div class="query-bar">
+		<input type="text" id="search" placeholder="stamp #, cpid, artist">
+		<input type="text" id="range-start" placeholder="start of range">
+		<input type="text" id="range-end" placeholder="end of range">
+		<select id="sort">
+				<option value="asc">Ascending</option>
+				<option value="desc">Descending</option>
+		</select>
+		<button id="submit">Submit</button>
+	</div>
 	<div id="data-container"></div>
 	<p id="copyright">&copy 2023 Bitcoin Stamps</p>
 </body>

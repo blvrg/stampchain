@@ -22,23 +22,27 @@ function indexPage() {
   fetchDataAndRender(currentPage, creatorAddress);
 
   function fetchDataAndRender(page, creator) {
-    // Update the API endpoint with the creator query parameter if it exists
-    const apiUrl = creator
-      ? `${apiBaseUrl}?creator=${creator}&page=${page}&page_size=${itemsPerPage}&sort_order=desc`
-      : `${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`;
+    return new Promise((resolve, reject) => {
+      const apiUrl = creator
+        ? `${apiBaseUrl}?creator=${creator}&page=${page}&page_size=${itemsPerPage}&sort_order=desc`
+        : `${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`;
 
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        // If this is the first page, set the total number of stamps (our only chance, really)
-        if (currentPage === 1 && data[0]) {
-          totalNumberOfStamps = Number(data[0].stamp);
-        }
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          if (currentPage === 1 && data[0]) {
+            totalNumberOfStamps = Number(data[0].stamp);
+          }
 
-        renderData(data);
-        renderPaginationButtons(page, data.length);
-      })
-      .catch(error => console.error(error));
+          renderData(data);
+          renderPaginationButtons(page, data.length);
+          resolve();
+        })
+        .catch(error => {
+          console.error(error);
+          reject(error);
+        });
+    });
   }
 
   function renderData(data) {
@@ -168,7 +172,18 @@ function indexPage() {
     paginationContainerBottom.appendChild(nextButtonBottom);
     paginationContainerBottom.appendChild(lastButtonBottom);
   }
-  
+  let isLoading = false;
+
+  window.addEventListener('scroll', () => {
+    if (isNearBottom() && !isLoading) {
+      isLoading = true;
+      currentPage++;
+      fetchDataAndRender(currentPage, creatorAddress)
+        .then(() => {
+          isLoading = false;
+        });
+    }
+  });
 }
 
 
@@ -352,6 +367,13 @@ function init() {
   }
 }
 
+function isNearBottom() {
+  const pageHeight = document.documentElement.offsetHeight;
+  const windowHeight = window.innerHeight;
+  const scrollPosition = window.scrollY || window.pageYOffset || document.body.scrollTop + (document.documentElement && document.documentElement.scrollTop || 0);
+  
+  return pageHeight - (scrollPosition + windowHeight) < 100;
+}
 
 
 // Call the init function when the DOM is fully loaded
